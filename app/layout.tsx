@@ -37,7 +37,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-100`}
       >
-        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-18 font-[family-name:var(--font-outfit)]">
+        <div className="items-center justify-items-center min-h-screen p-8 gap-16 sm:p-18 font-[family-name:var(--font-outfit)]">
           <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
             {children}
           </main>
