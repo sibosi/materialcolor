@@ -15,7 +15,7 @@
   "theme_color": "#fa8f57",
   "icons": [
     {
-      "src": "favico.ico",
+      "src": "/favicon.ico",
       "sizes": "256x256"
     },
     {

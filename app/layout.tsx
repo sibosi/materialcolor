@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import ServiceWorker from "./serviceWorker";
 import "./globals.css";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +22,11 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Material Color Generator",
   description: "Generate Material Design colors",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/ios/1024.png",
+    shortcut: "/ios/1024.png",
+  },
 };
 
 export default function RootLayout({
@@ -31,9 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="apple-touch-icon" href="ios/1024.png" sizes="1024x1024" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="darkreader-lock" />
+        <link rel="apple-touch-icon" href="/ios/1024.png" />
       </head>
       <body
         className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-100`}
