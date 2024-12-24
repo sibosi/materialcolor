@@ -1,4 +1,3 @@
-import Guide from "@/components/Guide";
 import ThemePicker from "@/components/ThemePicker";
 
 export default function Home() {
@@ -7,7 +6,6 @@ export default function Home() {
       <h1 className="mb-2 text-center text-5xl font-black">Material Palette</h1>
       <h2 className="mb-3 text-center text-2xl">Pick a color!</h2>
       <ThemePicker />
-      <Guide />
     </div>
   );
 }
