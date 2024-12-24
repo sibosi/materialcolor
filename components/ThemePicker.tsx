@@ -11,17 +11,17 @@ const loadTheme = (hue: number, chroma: number) => {
 
   document.documentElement.style.setProperty(
     "--primary-hue",
-    hexFromArgb(color)
+    hexFromArgb(color),
   );
   document.documentElement.style.setProperty(
     "--currentColor",
-    hexFromArgb(color)
+    hexFromArgb(color),
   );
   document.documentElement.style.setProperty("--primary", hexFromArgb(color));
   tones.forEach((tone) => {
     document.documentElement.style.setProperty(
       `--primary-${tone}`,
-      hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt())
+      hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt()),
     );
   });
 
@@ -43,11 +43,11 @@ export default function ThemePicker() {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 justify-between">
+      <div className="flex flex-wrap justify-between gap-2">
         <div>
-          <div className="flex items-center gap-4 my-3">
+          <div className="my-3 flex items-center gap-4">
             <div
-              className="rounded-full w-10 h-10 text-black flex items-center justify-center"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-black"
               style={{ backgroundColor: `hsl(${hue}, 100%, 50%)` }}
             >
               {hue}
@@ -63,14 +63,14 @@ export default function ThemePicker() {
             />
           </div>
 
-          <div className="flex items-center gap-4 my-3">
+          <div className="my-3 flex items-center gap-4">
             <div
-              className="rounded-full w-10 h-10 text-black flex items-center justify-center"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-black"
               style={{ backgroundColor: currentColor }}
             >
               {chroma}
             </div>
-            <div className="flex items-center gap-4 my-3">
+            <div className="my-3 flex items-center gap-4">
               <input
                 title="Hue picker"
                 type="range"
@@ -85,29 +85,29 @@ export default function ThemePicker() {
         </div>
 
         <div
-          className="w-32 h-32 rounded-lg shadow-lg "
+          className="h-32 w-32 rounded-lg shadow-lg"
           style={{ backgroundColor: currentColor }}
         >
-          <div className="text-white text-center">{currentColor}</div>
+          <div className="text-center text-white">{currentColor}</div>
 
-          <div className="text-white text-center">
+          <div className="text-center text-white">
             {`hct(${hue}, ${chroma}%, 50%)`}
           </div>
         </div>
       </div>
 
-      <div className="lg:flex flex-wrap gap-x-4 my-3">
+      <div className="my-3 flex-wrap gap-x-4 lg:flex">
         {tones.map((tone) => (
           <div
             key={tone}
-            className={`rounded-lg shadow-lg overflow-hidden my-2 max-lg:flex gap-3 text-lg font-mono text-center lg:w-20 font-extrabold px-1`}
+            className={`my-2 gap-3 overflow-hidden rounded-lg px-1 text-center font-mono text-lg font-extrabold shadow-lg max-lg:flex lg:w-20`}
             style={{
               backgroundColor: hexFromArgb(
-                Hct.from(hue, chroma, 100 - tone / 10).toInt()
+                Hct.from(hue, chroma, 100 - tone / 10).toInt(),
               ),
               color:
                 hexFromArgb(
-                  Hct.from(hue, chroma, tone > 400 ? 80 : 20).toInt()
+                  Hct.from(hue, chroma, tone > 400 ? 80 : 20).toInt(),
                 ) ?? "black",
             }}
           >

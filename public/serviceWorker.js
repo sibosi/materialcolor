@@ -5,7 +5,7 @@ self.addEventListener("install", (event) => {
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Cache opened during install");
       return cache;
-    })
+    }),
   );
 });
 
@@ -38,7 +38,7 @@ self.addEventListener("fetch", (event) => {
         .catch(() => {
           console.error("Fetch failed and no cache available");
         });
-    })
+    }),
   );
 });
 
@@ -51,8 +51,8 @@ self.addEventListener("activate", (event) => {
             console.log("Old cache deleted:", cacheName);
             return caches.delete(cacheName);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });

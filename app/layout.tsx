@@ -42,14 +42,14 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/ios/1024.png" />
       </head>
       <body
-        className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-100`}
+        className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} bg-primary-100 antialiased`}
       >
-        <div className="items-center justify-items-center min-h-screen p-8 gap-16 sm:p-18 font-[family-name:var(--font-outfit)]">
-          <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <div className="sm:p-18 min-h-screen items-center justify-items-center gap-16 p-8 font-[family-name:var(--font-outfit)]">
+          <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
             {children}
           </main>
         </div>
-        <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
+        <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6"></footer>
       </body>
 
       <ServiceWorker />

@@ -1,0 +1,12 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "duoQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "classNameSortOrder": ["className", "id", "name"],
+  "endOfLine": "lf",
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
