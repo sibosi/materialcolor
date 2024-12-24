@@ -24,6 +24,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background: hsl(--primary-hue, 100%, 50%);
 
   border: 2px solid #ccc;
   cursor: pointer;

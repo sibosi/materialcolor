@@ -31,8 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="apple-touch-icon" href="/ios/256.png" sizes="256x256" />
+        <link rel="apple-touch-icon" href="ios/1024.png" sizes="1024x1024" />
         <link rel="manifest" href="/manifest.json" />
+        <meta name="darkreader-lock" />
       </head>
       <body
         className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-100`}

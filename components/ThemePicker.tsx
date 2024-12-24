@@ -9,7 +9,14 @@ const tones = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 const loadTheme = (hue: number, chroma: number) => {
   const color = Hct.from(hue, chroma, 50).toInt();
 
-  // make globals.css css variables to the new theme
+  document.documentElement.style.setProperty(
+    "--primary-hue",
+    hexFromArgb(color)
+  );
+  document.documentElement.style.setProperty(
+    "--currentColor",
+    hexFromArgb(color)
+  );
   document.documentElement.style.setProperty("--primary", hexFromArgb(color));
   tones.forEach((tone) => {
     document.documentElement.style.setProperty(
@@ -36,20 +43,6 @@ export default function ThemePicker() {
 
   return (
     <div>
-      <style>{`
-        .hue-slider::-webkit-slider-thumb {
-          background: ${`hsl(${hue}, 100%, 50%)`};
-        } 
-
-        .chroma-slider {
-            background: linear-gradient(to right, hsl(${hue}, 0%, 50%), hsl(${hue}, 100%, 50%));
-        }
-
-        .chroma-slider::-webkit-slider-thumb {
-          background: ${currentColor};
-        }
-      `}</style>
-
       <div className="flex flex-wrap gap-2 justify-between">
         <div>
           <div className="flex items-center gap-4 my-3">
