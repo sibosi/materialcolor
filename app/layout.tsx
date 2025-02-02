@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import ServiceWorker from "./serviceWorker";
 import "./globals.css";
-import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +52,7 @@ export default function RootLayout({
         <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6"></footer>
       </body>
 
+      <Analytics />
       <ServiceWorker />
     </html>
   );
