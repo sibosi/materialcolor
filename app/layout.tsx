@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
-import ServiceWorker from "./serviceWorker";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -53,7 +52,6 @@ export default function RootLayout({
       </body>
 
       <Analytics />
-      <ServiceWorker />
     </html>
   );
 }
