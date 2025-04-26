@@ -6,21 +6,60 @@ import "./ChromaPicker.css";
 
 const tones = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 
-const loadTheme = (hue: number, chroma: number) => {
+const hexToRgb = (hex: string) => {
+  const clean = hex.replace(/^#/, '')
+  const num = parseInt(clean, 16)
+  return {
+    r: (num >> 16) & 255,
+    g: (num >> 8) & 255,
+    b: num & 255,
+  }
+}
+
+// convert {r,g,b} in [0..255] to {h,s,l}
+const rgbToHsl = ({ r, g, b }: { r: number; g: number; b: number }) => {
+  r /= 255; g /= 255; b /= 255
+  const max = Math.max(r, g, b), min = Math.min(r, g, b)
+  let h = 0, s = 0
+  const l = (max + min) / 2
+  if (max !== min) {
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)); break
+      case g: h = ((b - r) / d + 2); break
+      case b: h = ((r - g) / d + 4); break
+    }
+    h /= 6
+  }
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) }
+}
+
+// full helper
+const hexToHslString = (hex: string) => {
+  const rgb = hexToRgb(hex)
+  const { h, s, l } = rgbToHsl(rgb)
+  return `hsl(${h}, ${s}%, ${l}%)`
+}
+
+export const loadTheme = (hue: number, chroma: number) => {
   const color = Hct.from(hue, chroma, 50).toInt();
 
   document.documentElement.style.setProperty(
-    "--primary-hue",
+    "--selfprimary-hue",
     hexFromArgb(color),
   );
   document.documentElement.style.setProperty(
     "--currentColor",
     hexFromArgb(color),
   );
-  document.documentElement.style.setProperty("--primary", hexFromArgb(color));
+  document.documentElement.style.setProperty(
+    "--selfprimary",
+    hexFromArgb(color),
+  );
   tones.forEach((tone) => {
     document.documentElement.style.setProperty(
-      `--primary-${tone}`,
+      `--selfprimary-${tone}`,
       hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt()),
     );
   });
@@ -97,6 +136,23 @@ export default function ThemePicker() {
       </div>
 
       <div className="my-3 flex-wrap gap-x-4 lg:flex">
+      <div
+            className={`my-2 gap-3 overflow-hidden rounded-lg px-1 text-center font-mono text-lg font-extrabold shadow-lg max-lg:flex lg:w-20`}
+            style={{
+              backgroundColor: hexFromArgb(
+                Hct.from(hue, chroma, 50).toInt(),
+              ),
+              color:
+                hexFromArgb(
+                  Hct.from(hue, chroma, 80).toInt(),
+                ) ?? "black",
+            }}
+          >
+            <p>Tone</p>
+            <p>Hex</p>
+            <p>HCT</p>
+            <p>HSL</p>
+          </div>
         {tones.map((tone) => (
           <div
             key={tone}
@@ -113,6 +169,14 @@ export default function ThemePicker() {
           >
             <p>{tone}</p>
             <p>{hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt())}</p>
+            <p>
+              {`hct(${hue}, ${chroma}%, ${100 - tone / 10})`}
+            </p>
+            <p>
+              {hexToHslString(
+                hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt()),
+              )}
+            </p>
           </div>
         ))}
       </div>
