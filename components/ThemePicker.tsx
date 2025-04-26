@@ -197,61 +197,104 @@ export default function ThemePicker() {
         placeholder="primary"
       />
 
-      <div className="my-3 overflow-hidden rounded-lg bg-selfprimary-900 font-mono text-selfprimary-100">
-        <p>{":root.light {"}</p>
-        <p>{`  --lightness-bg: 100%;`}</p>
-        <p>{`  --lightness-cont: 0%;`}</p>
-        <p>
+      <div className="my-3 flex flex-col overflow-hidden rounded-lg bg-selfprimary-900 font-mono text-selfprimary-100">
+        <span>{":root.light {"}</span>
+        <span>{`  --lightness-bg: 100%;`}</span>
+        <span>{`  --lightness-cont: 0%;`}</span>
+        <span>
           {`  --color-${colorName}: ${hexFromArgb(
             Hct.from(hue, chroma, 50).toInt(),
           )};`}
-        </p>
-        <p>
+        </span>
+        <span>
           {`  --color-${colorName}-bg: ${hexFromArgb(
             Hct.from(hue, chroma, 100).toInt(),
           )};`}
-        </p>
-        <p>
+        </span>
+        <span>
           {`  --color-${colorName}-cont: ${hexFromArgb(
             Hct.from(hue, chroma, 0).toInt(),
           )};`}
-        </p>
+        </span>
         {tones.map((tone) => (
-          <p key={tone}>
+          <span key={tone}>
             {`  --color-${colorName}-${tone}: ${hexFromArgb(
               Hct.from(hue, chroma, 100 - tone / 10).toInt(),
             )};`}
-          </p>
+          </span>
         ))}
-        <p>{`}`}</p>
+        <span>{`}`}</span>
         <br />
-        <p>{":root.dark {"}</p>
-        <p>{`  --lightness-bg: 0%;`}</p>
-        <p>{`  --lightness-cont: 100%;`}</p>
-        <p>
+        <span>{":root.dark {"}</span>
+        <span>{`  --lightness-bg: 0%;`}</span>
+        <span>{`  --lightness-cont: 100%;`}</span>
+        <span>
           {`  --color-${colorName}: ${hexFromArgb(
             Hct.from(hue, chroma, 50).toInt(),
           )};`}
-        </p>
-        <p>
+        </span>
+        <span>
           {`  --color-${colorName}-bg: ${hexFromArgb(
             Hct.from(hue, chroma, 0).toInt(),
           )};`}
-        </p>
-        <p>
+        </span>
+        <span>
           {`  --color-${colorName}-cont: ${hexFromArgb(
             Hct.from(hue, chroma, 100).toInt(),
           )};`}
-        </p>
+        </span>
         {tones.map((tone) => (
-          <p key={tone}>
+          <span key={tone}>
             {`  --color-${colorName}-${tone}: ${hexFromArgb(
               Hct.from(hue, chroma, tone / 10).toInt(),
             )};`}
-          </p>
+          </span>
         ))}
-        <p>{`}`}</p>
+        <span>{`}`}</span>
       </div>
     </div>
   );
+}
+
+{
+  /**
+  
+  :root.light {
+  /* Hue érték (H) 
+  --color-primary: hsl(200, 74%, 40%);
+  --color-primary-bg: hsl(207, 0%, 100%);
+  --color-primary-cont: hsl(207, 92%, 0%);
+  --color-primary-20: hsl(207, 92%, 98%);
+  --color-primary-50: hsl(207, 92%, 95%);
+  --color-primary-100: hsl(207, 100%, 89%);
+  --color-primary-200: hsl(205, 100%, 77%);
+  --color-primary-300: hsl(203, 75%, 64%);
+  --color-primary-400: hsl(202, 58%, 53%);
+  --color-primary-500: hsl(200, 74%, 40%);
+  --color-primary-600: hsl(198, 100%, 28%);
+  --color-primary-700: hsl(198, 100%, 21%);
+  --color-primary-800: hsl(199, 100%, 15%);
+  --color-primary-900: hsl(201, 100%, 9%);
+}
+
+:root.dark {
+  --lightness-bg: 0%;
+  --lightness-cont: 100%;
+
+  --color-primary: hsl(200, 74%, 40%);
+  --color-primary-bg: hsl(207, 0%, 0%);
+  --color-primary-cont: hsl(207, 92%, 100%);
+  --color-primary-20: hsl(207, 92%, 2%);
+  --color-primary-50: hsl(207, 92%, 5%);
+  --color-primary-100: hsl(201, 100%, 9%);
+  --color-primary-200: hsl(199, 100%, 15%);
+  --color-primary-300: hsl(198, 100%, 21%);
+  --color-primary-400: hsl(198, 100%, 28%);
+  --color-primary-500: hsl(200, 74%, 40%);
+  --color-primary-600: hsl(202, 58%, 53%);
+  --color-primary-700: hsl(203, 75%, 64%);
+  --color-primary-800: hsl(205, 100%, 77%);
+  --color-primary-900: hsl(207, 100%, 89%);  
+  
+  */
 }
