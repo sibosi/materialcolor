@@ -3,44 +3,59 @@ import React, { useEffect, useState } from "react";
 import { hexFromArgb, Hct } from "@material/material-color-utilities";
 import "./HuePicker.css";
 import "./ChromaPicker.css";
+import Input from "./ui/Input";
 
-const tones = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+const tones = [20, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
 const hexToRgb = (hex: string) => {
-  const clean = hex.replace(/^#/, '')
-  const num = parseInt(clean, 16)
+  const clean = hex.replace(/^#/, "");
+  const num = parseInt(clean, 16);
   return {
     r: (num >> 16) & 255,
     g: (num >> 8) & 255,
     b: num & 255,
-  }
-}
+  };
+};
 
 // convert {r,g,b} in [0..255] to {h,s,l}
 const rgbToHsl = ({ r, g, b }: { r: number; g: number; b: number }) => {
-  r /= 255; g /= 255; b /= 255
-  const max = Math.max(r, g, b), min = Math.min(r, g, b)
-  let h = 0, s = 0
-  const l = (max + min) / 2
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b),
+    min = Math.min(r, g, b);
+  let h = 0,
+    s = 0;
+  const l = (max + min) / 2;
   if (max !== min) {
-    const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)); break
-      case g: h = ((b - r) / d + 2); break
-      case b: h = ((r - g) / d + 4); break
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
     }
-    h /= 6
+    h /= 6;
   }
-  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) }
-}
+  return {
+    h: Math.round(h * 360),
+    s: Math.round(s * 100),
+    l: Math.round(l * 100),
+  };
+};
 
 // full helper
 const hexToHslString = (hex: string) => {
-  const rgb = hexToRgb(hex)
-  const { h, s, l } = rgbToHsl(rgb)
-  return `hsl(${h}, ${s}%, ${l}%)`
-}
+  const rgb = hexToRgb(hex);
+  const { h, s, l } = rgbToHsl(rgb);
+  return `hsl(${h}, ${s}%, ${l}%)`;
+};
 
 export const loadTheme = (hue: number, chroma: number) => {
   const color = Hct.from(hue, chroma, 50).toInt();
@@ -73,6 +88,7 @@ export const loadTheme = (hue: number, chroma: number) => {
 export default function ThemePicker() {
   const [hue, setHue] = useState(45);
   const [chroma, setChroma] = useState(50);
+  const [colorName, setColorName] = useState("primary");
 
   const currentColor = hexFromArgb(Hct.from(hue, chroma, 50).toInt());
 
@@ -136,23 +152,18 @@ export default function ThemePicker() {
       </div>
 
       <div className="my-3 flex-wrap gap-x-4 lg:flex">
-      <div
-            className={`my-2 gap-3 overflow-hidden rounded-lg px-1 text-center font-mono text-lg font-extrabold shadow-lg max-lg:flex lg:w-20`}
-            style={{
-              backgroundColor: hexFromArgb(
-                Hct.from(hue, chroma, 50).toInt(),
-              ),
-              color:
-                hexFromArgb(
-                  Hct.from(hue, chroma, 80).toInt(),
-                ) ?? "black",
-            }}
-          >
-            <p>Tone</p>
-            <p>Hex</p>
-            <p>HCT</p>
-            <p>HSL</p>
-          </div>
+        <div
+          className={`my-2 gap-3 overflow-hidden rounded-lg px-1 text-center font-mono text-lg font-extrabold shadow-lg max-lg:flex lg:w-20`}
+          style={{
+            backgroundColor: hexFromArgb(Hct.from(hue, chroma, 50).toInt()),
+            color: hexFromArgb(Hct.from(hue, chroma, 80).toInt()) ?? "black",
+          }}
+        >
+          <p>Tone</p>
+          <p>Hex</p>
+          <p>HCT</p>
+          <p>HSL</p>
+        </div>
         {tones.map((tone) => (
           <div
             key={tone}
@@ -169,9 +180,7 @@ export default function ThemePicker() {
           >
             <p>{tone}</p>
             <p>{hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt())}</p>
-            <p>
-              {`hct(${hue}, ${chroma}%, ${100 - tone / 10})`}
-            </p>
+            <p>{`hct(${hue}, ${chroma}%, ${100 - tone / 10})`}</p>
             <p>
               {hexToHslString(
                 hexFromArgb(Hct.from(hue, chroma, 100 - tone / 10).toInt()),
@@ -179,6 +188,69 @@ export default function ThemePicker() {
             </p>
           </div>
         ))}
+      </div>
+
+      <Input
+        value={colorName}
+        onChange={(e) => setColorName(e.target.value)}
+        className="my-3 w-1/2"
+        placeholder="primary"
+      />
+
+      <div className="my-3 overflow-hidden rounded-lg bg-selfprimary-900 font-mono text-selfprimary-100">
+        <p>{":root.light {"}</p>
+        <p>{`  --lightness-bg: 100%;`}</p>
+        <p>{`  --lightness-cont: 0%;`}</p>
+        <p>
+          {`  --color-${colorName}: ${hexFromArgb(
+            Hct.from(hue, chroma, 50).toInt(),
+          )};`}
+        </p>
+        <p>
+          {`  --color-${colorName}-bg: ${hexFromArgb(
+            Hct.from(hue, chroma, 100).toInt(),
+          )};`}
+        </p>
+        <p>
+          {`  --color-${colorName}-cont: ${hexFromArgb(
+            Hct.from(hue, chroma, 0).toInt(),
+          )};`}
+        </p>
+        {tones.map((tone) => (
+          <p key={tone}>
+            {`  --color-${colorName}-${tone}: ${hexFromArgb(
+              Hct.from(hue, chroma, 100 - tone / 10).toInt(),
+            )};`}
+          </p>
+        ))}
+        <p>{`}`}</p>
+        <br />
+        <p>{":root.dark {"}</p>
+        <p>{`  --lightness-bg: 0%;`}</p>
+        <p>{`  --lightness-cont: 100%;`}</p>
+        <p>
+          {`  --color-${colorName}: ${hexFromArgb(
+            Hct.from(hue, chroma, 50).toInt(),
+          )};`}
+        </p>
+        <p>
+          {`  --color-${colorName}-bg: ${hexFromArgb(
+            Hct.from(hue, chroma, 0).toInt(),
+          )};`}
+        </p>
+        <p>
+          {`  --color-${colorName}-cont: ${hexFromArgb(
+            Hct.from(hue, chroma, 100).toInt(),
+          )};`}
+        </p>
+        {tones.map((tone) => (
+          <p key={tone}>
+            {`  --color-${colorName}-${tone}: ${hexFromArgb(
+              Hct.from(hue, chroma, tone / 10).toInt(),
+            )};`}
+          </p>
+        ))}
+        <p>{`}`}</p>
       </div>
     </div>
   );
